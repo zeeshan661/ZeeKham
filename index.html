@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zeeshan ❤️ Sunaina</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(-45deg, #ff758c, #ff7eb3, #a18cd1, #fad0c4);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+    @keyframes gradient { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+    #heart-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 1; }
+    .heart { position: absolute; font-size: 24px; animation: fall 5s linear infinite; }
+    @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+    .glow { text-shadow: 0 0 10px #fff, 0 0 20px #ff4d6d, 0 0 30px #ff4d6d; }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-center">
+
+  <div id="heart-container"></div>
+
+  <div class="z-10 p-8 bg-white/20 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/30 max-w-2xl">
+    <h1 id="names" class="text-5xl md:text-7xl font-bold text-white glow mb-4"></h1>
+    <p id="message" class="text-xl md:text-2xl text-white/90 mb-6"></p>
+    
+    <p class="text-white text-lg mb-4">Zeeshan ❤️ Sunaina <span id="days" class="font-bold"></span></p>
+
+    <div class="flex gap-4 justify-center flex-wrap">
+      <button id="loveBtn" class="px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-full shadow-lg transition transform hover:scale-110">
+        MY Janu ❤️
+      </button>
+      <button id="musicBtn" class="px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white font-bold rounded-full shadow-lg transition transform hover:scale-110">
+        Music On 🎵
+      </button>
+      
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 mt-6">
+      <div class="bg-white/30 p-3 rounded-xl text-white">Zeeshan ki Churail = Sunaina</div>
+      <div class="bg-white/30 p-3 rounded-xl text-white">hmmmmmmmmmmmmmmmmm=👊👊👊👊👊👊👊👊</div>
+    </div>
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // 1. Typewriter with both names
+    const namesEl = document.getElementById('names');
+    const msgEl = document.getElementById('message');
+    const namesText = "Zeeshan ❤️ Sunaina";
+    const msgText = "Meri  Gojara";
+    let i = 0, j = 0;
+    function typeWriter() {
+      if (i < namesText.length) { namesEl.innerHTML += namesText.charAt(i); i++; setTimeout(typeWriter, 150); }
+      else if (j < msgText.length) { msgEl.innerHTML += msgText.charAt(j); j++; setTimeout(typeWriter, 50); }
+    }
+    typeWriter();
+
+    // 2. Heart Rain with names
+    function createHearts() {
+      const container = document.getElementById('heart-container');
+      container.innerHTML = ""; // <-- Galti 1 theek ki: " ki jagah "
+      for(let k = 0; k < 200; k++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = ['❤️','💖','💕','💗','Z&S'][Math.floor(Math.random()*5)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.color = '#ff4d6d';
+        heart.style.animationDelay = Math.random() * 3 + 's';
+        heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+        container.appendChild(heart);
+        setTimeout(() => heart.remove(), 9000);
+      }
+    }
+    
+    // 3. Love Counter - yaha apni starting date dalo
+    const startDate = new Date('2024-01-01'); // <-- Galti 2 theek ki: ye line add ki
+    const today = new Date();
+    const diffDays = Math.ceil(Math.abs(today - startDate) / (1000 * 60 * 60 * 24)); 
+    document.getElementById('days').innerText = diffDays + " Din";
+    
+    // 4. Button Events
+    document.getElementById('loveBtn').addEventListener('click', () => { // <-- Galti 3 theek ki: ye button add kiya
+      createHearts();
+    });
+
+    let musicPlaying = false;
+    document.getElementById('musicBtn').addEventListener('click', () => {
+      const music = document.getElementById('bgMusic');
+      if(!musicPlaying) { music.play(); musicPlaying = true; document.getElementById('musicBtn').innerText = "Music Off 🔇"; }
+      else { music.pause(); musicPlaying = false; document.getElementById('musicBtn').innerText = "Music On 🎵"; }
+    });
+
+    setTimeout(createHearts, 2000);
+  </script>
+</body>
+</html>
